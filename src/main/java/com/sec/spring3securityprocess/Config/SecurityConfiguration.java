@@ -45,7 +45,7 @@ public class SecurityConfiguration {
 //        http
 //                .authorizeHttpRequests
 //                        (authorize -> authorize
-//                                .requestMatchers("/api/clients", "/api/clients/{id}", "/api/clients/page/{id}").permitAll()
+//                                .requestMatchers("/api/v1/auth/**").permitAll()
 //                                .anyRequest().authenticated());
 
 
