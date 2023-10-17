@@ -30,6 +30,10 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
+    public String generateToken(UserDetails userDetails){
+        return generateToken(null, userDetails);
+    }
+
     public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails){
         return Jwts.builder()
                 .setClaims(extraClaims)
@@ -38,6 +42,20 @@ public class JwtService {
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
+    }
+
+    public boolean validateToken(String jwt, UserDetails userDetails){
+        final String userEmail = extractUserEmail(jwt);
+
+        return (userEmail.equals(userDetails.getUsername())) && !isTokenExpired(jwt);
+    }
+
+    private boolean isTokenExpired(String jwt) {
+        return extractExpiration(jwt).before(new Date());
+    }
+
+    private Date extractExpiration(String jwt) {
+        return extractClaim(jwt, Claims::getExpiration);
     }
 
     private Claims extractAllClaims(String jwt) {
