@@ -37,7 +37,7 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public AuthenticationProvider authenticationProvider(AuthenticationConfiguration config) throws Exception {
+    public AuthenticationProvider authenticationProvider2(AuthenticationConfiguration config) throws Exception {
         return (AuthenticationProvider) config.getAuthenticationManager();
     }
 
